@@ -55,7 +55,6 @@ def test_change_status_invalid_json_returns_400(cards_client):
 
 
 @pytest.mark.negative
-@pytest.mark.xfail(reason="BUG: bos body 400 yox, 500 qaytarir")
 def test_change_status_empty_body_returns_400(cards_client):
     response = cards_client.change_status({})
 
@@ -63,7 +62,7 @@ def test_change_status_empty_body_returns_400(cards_client):
 
 
 @pytest.mark.negative
-@pytest.mark.xfail(reason="BUG: movcud olmayan status qebul olunur")
+# @pytest.mark.xfail(reason="BUG: movcud olmayan status qebul olunur")
 def test_change_status_unknown_status_is_rejected(cards_client):
     response = cards_client.change_status(make_card_request(status="XYZ"))
 
