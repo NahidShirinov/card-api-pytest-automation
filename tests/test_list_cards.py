@@ -1,8 +1,11 @@
 """GET /api/cards  (hazir numune)"""
+import allure
 import pytest
 
 from data.card_factory import make_card_request
 from models.card import CardStatusRecord
+
+pytestmark = [allure.epic("Card API"), allure.feature("GET /api/cards")]
 
 
 @pytest.mark.smoke

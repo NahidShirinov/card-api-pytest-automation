@@ -4,9 +4,12 @@ Istifade edeceyin seyler:
   - stats_client.get_stats()        -> clients/stats_client.py
   - StatsResponse.model_validate()  -> models/stats.py
 """
+import allure
 import pytest
 
 from models.stats import StatsResponse
+
+pytestmark = [allure.epic("Card API"), allure.feature("GET /api/stats")]
 
 
 @pytest.mark.smoke

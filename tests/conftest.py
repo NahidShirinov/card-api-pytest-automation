@@ -54,3 +54,13 @@ def pytest_html_results_table_row(report, cells):
 
 def pytest_html_report_title(report):
     report.title = "Card API Test Report"
+
+
+def pytest_sessionfinish(session):
+    """Allure report-un 'Environment' blokunu doldurur."""
+    alluredir = session.config.getoption("allure_report_dir", None)
+    if not alluredir:
+        return
+    from config.settings import BASE_URL
+    with open(f"{alluredir}/environment.properties", "w") as f:
+        f.write(f"Base.URL={BASE_URL}\n")

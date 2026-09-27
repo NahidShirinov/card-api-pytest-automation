@@ -8,10 +8,13 @@ Istifade edeceyin seyler:
 
 Her testi bitirende pytest.skip(...) setrini sil.
 """
+import allure
 import pytest
 
 from data.card_factory import make_card_request
 from models.card import ProcessingResult
+
+pytestmark = [allure.epic("Card API"), allure.feature("POST /api/cards/status/batch")]
 
 
 def test_batch_returns_200(cards_client):

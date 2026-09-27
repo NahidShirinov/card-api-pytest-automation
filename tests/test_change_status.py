@@ -1,8 +1,11 @@
 """POST /api/cards/status  (hazir numune)"""
+import allure
 import pytest
 
 from data.card_factory import VALID_STATUSES, make_card_request
 from models.card import ProcessingResult
+
+pytestmark = [allure.epic("Card API"), allure.feature("POST /api/cards/status")]
 
 
 @pytest.mark.smoke

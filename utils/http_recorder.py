@@ -6,11 +6,27 @@ bunlari report-a elave edir.
 import json
 from urllib.parse import urlparse
 
+import allure
+
 _responses = []
 
 
 def record(response, *args, **kwargs):
     _responses.append(response)
+    _attach_to_allure(response)
+
+
+def _attach_to_allure(response):
+    """Allure report-da her sorgu ayrica addim (step) kimi gorunur."""
+    req = response.request
+    title = f"{req.method} {urlparse(req.url).path} -> {response.status_code}"
+    with allure.step(title):
+        allure.attach(req.url, name="URL", attachment_type=allure.attachment_type.TEXT)
+        if req.body:
+            allure.attach(_pretty(req.body, limit=None), name="Request body",
+                          attachment_type=allure.attachment_type.JSON)
+        allure.attach(_pretty(response.text, limit=None), name="Response body",
+                      attachment_type=allure.attachment_type.JSON)
 
 
 def reset():
@@ -42,7 +58,7 @@ def _format(response) -> str:
     )
 
 
-def _pretty(body, limit: int = 3000) -> str:
+def _pretty(body, limit=3000) -> str:
     if not body:
         return "(bos)"
     if isinstance(body, bytes):
@@ -51,6 +67,6 @@ def _pretty(body, limit: int = 3000) -> str:
         text = json.dumps(json.loads(body), indent=2, ensure_ascii=False)
     except ValueError:
         text = str(body)
-    if len(text) > limit:
+    if limit and len(text) > limit:
         text = text[:limit] + f"\n... ({len(text) - limit} simvol kesildi)"
     return text

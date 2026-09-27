@@ -15,8 +15,18 @@ cp .env.example .env
 pytest                    # hamisi
 pytest -m smoke           # yalniz smoke testler
 pytest -m negative        # yalniz negativ testler
-pytest --html=report.html # HTML hesabat
 ```
+
+## Report-lar
+Her `pytest` iki report ucun melumat yaradir:
+
+- **HTML report**: `open reports/report.html`
+- **Allure report** (Allure CLI lazimdir: `brew install allure`):
+  ```
+  allure serve allure-results
+  ```
+
+Her iki report-da her testin gonderdiyi sorgu ve aldigi cavab gorunur.
 
 ## Struktur
 | Qovluq | Ne ucun |
@@ -25,6 +35,7 @@ pytest --html=report.html # HTML hesabat
 | `clients/` | API sorgulari (her endpoint bir metod) |
 | `models/` | Cavablarin strukturu (pydantic) |
 | `data/` | Test melumati yaradan funksiyalar |
+| `utils/` | Sorgu/cavablari report-a yazan kod |
 | `tests/` | Testlerin ozu |
 
 ## Tapilan buglar
