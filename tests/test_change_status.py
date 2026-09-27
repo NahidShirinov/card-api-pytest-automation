@@ -46,9 +46,7 @@ def test_change_status_timings_are_consistent(cards_client):
 
 @pytest.mark.negative
 def test_change_status_invalid_json_returns_400(cards_client):
-    response = cards_client.session.post(
-        f"{cards_client.base_url}/api/cards/status", data="bad json"
-    )
+    response = cards_client.post("/api/cards/status", data="bad json")
 
     assert response.status_code == 400
 
